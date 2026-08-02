@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { Form, Head, usePage } from '@inertiajs/vue3';
-/* @chisel-email-verification */
 import { Link } from '@inertiajs/vue3';
-/* @end-chisel-email-verification */
 import { computed } from 'vue';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/DeleteUser.vue';
@@ -12,15 +10,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { edit } from '@/routes/profile';
-/* @chisel-email-verification */
 import { send } from '@/routes/verification';
-/* @end-chisel-email-verification */
 
 defineOptions({
     layout: {
         breadcrumbs: [
             {
-                title: 'Profile settings',
+                title: 'Profile Settings',
                 href: edit(),
             },
         ],
@@ -32,9 +28,9 @@ const user = computed(() => page.props.auth.user);
 </script>
 
 <template>
-    <Head title="Profile settings" />
+    <Head title="Profile Settings" />
 
-    <h1 class="sr-only">Profile settings</h1>
+    <h1 class="sr-only">Profile Settings</h1>
 
     <div class="flex flex-col space-y-6">
         <Heading
@@ -57,13 +53,13 @@ const user = computed(() => page.props.auth.user);
                     :default-value="user.name"
                     required
                     autocomplete="name"
-                    placeholder="Full name"
+                    placeholder="Full Name"
                 />
                 <InputError class="mt-2" :message="errors.name" />
             </div>
 
             <div class="grid gap-2">
-                <Label for="email">Email address</Label>
+                <Label for="email">Email</Label>
                 <Input
                     id="email"
                     type="email"
@@ -77,7 +73,6 @@ const user = computed(() => page.props.auth.user);
                 <InputError class="mt-2" :message="errors.email" />
             </div>
 
-            <!-- @chisel-email-verification -->
             <div v-if="page.props.mustVerifyEmail && !user.email_verified_at">
                 <p class="-mt-4 text-sm text-muted-foreground">
                     Your email address is unverified.
@@ -97,7 +92,6 @@ const user = computed(() => page.props.auth.user);
                     A new verification link has been sent to your email address.
                 </div>
             </div>
-            <!-- @end-chisel-email-verification -->
 
             <div class="flex items-center gap-4">
                 <Button :disabled="processing" data-test="update-profile-button"
