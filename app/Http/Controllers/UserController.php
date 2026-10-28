@@ -18,16 +18,14 @@ class UserController extends Controller
     {
         $users = User::query()
             ->latest()
-            ->get()
-            ->map(fn (User $user) => [
+            ->paginate(10)
+            ->through(fn (User $user) => [
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
                 'created_at_formatted' => $user->created_at?->format('M d, Y'),
                 'updated_at_formatted' => $user->updated_at?->format('M d, Y'),
-            ])
-            ->values()
-            ->toArray();    
+            ]);
 
         return Inertia::render('users/Index', [
             'users' => $users,

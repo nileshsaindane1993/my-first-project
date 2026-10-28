@@ -20,6 +20,18 @@ class UserCrudTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_users_listing_is_paginated_by_ten(): void
+    {
+        $this->actingAs(User::factory()->create());
+        User::factory()->count(11)->create();
+
+        $this->get(route('users.index', ['page' => 2]))
+            ->assertOk()
+            ->assertSee('"current_page":2', false)
+            ->assertSee('"per_page":10', false)
+            ->assertSee('"total":12', false);
+    }
+
     public function test_authenticated_users_can_visit_the_create_and_edit_pages(): void
     {
         $user = User::factory()->create();
